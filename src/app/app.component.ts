@@ -5,35 +5,58 @@ import { MatTableDataSource } from '@angular/material';
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
-  styleUrls: [ './app.component.css' ]
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit  {
-
+export class AppComponent implements OnInit {
   people = [
     {
       name: 'John',
       id: 1,
       colour: 'Green',
-      pet: 'Dog'
+      pet: 'Dog',
     },
     {
       name: 'Sarah',
       id: 2,
       colour: 'Purple',
-      pet: 'Cat'
+      pet: 'Cat',
     },
     {
       name: 'Lindsay',
       id: 3,
       colour: 'Blue',
-      pet: 'Lizard'
+      pet: 'Lizard',
     },
     {
       name: 'Megan',
       id: 4,
       colour: 'Orange',
-      pet: 'Dog'
-    }
+      pet: 'Dog',
+    },
+    {
+      name: 'Megan',
+      id: 4,
+      colour: 'Orange',
+      pet: 'Dog',
+    },
+    {
+      name: 'Megan',
+      id: 4,
+      colour: 'Orange',
+      pet: 'Dog',
+    },
+    {
+      name: 'Megan',
+      id: 4,
+      colour: 'Orange',
+      pet: 'Dog',
+    },
+    {
+      name: 'Megan',
+      id: 4,
+      colour: 'Orange',
+      pet: 'Dog',
+    },
   ];
 
   nameFilter = new FormControl('');
@@ -46,54 +69,47 @@ export class AppComponent implements OnInit  {
     name: '',
     id: '',
     colour: '',
-    pet: ''
+    pet: '',
   };
 
   constructor() {
     this.dataSource.data = this.people;
     this.dataSource.filterPredicate = this.createFilter();
+    console.log(this.dataSource.data)
+    console.log(this.nameFilter)
   }
 
   ngOnInit() {
-    this.nameFilter.valueChanges
-      .subscribe(
-        name => {
-          this.filterValues.name = name;
-          this.dataSource.filter = JSON.stringify(this.filterValues);
-        }
-      )
-    this.idFilter.valueChanges
-      .subscribe(
-        id => {
-          this.filterValues.id = id;
-          this.dataSource.filter = JSON.stringify(this.filterValues);
-        }
-      )
-    this.colourFilter.valueChanges
-      .subscribe(
-        colour => {
-          this.filterValues.colour = colour;
-          this.dataSource.filter = JSON.stringify(this.filterValues);
-        }
-      )
-    this.petFilter.valueChanges
-      .subscribe(
-        pet => {
-          this.filterValues.pet = pet;
-          this.dataSource.filter = JSON.stringify(this.filterValues);
-        }
-      )
+    this.nameFilter.valueChanges.subscribe((name) => {
+      this.filterValues.name = name;
+      this.dataSource.filter = JSON.stringify(this.filterValues);
+      console.log(name);
+      console.log(this.dataSource.filter);
+    });
+    this.idFilter.valueChanges.subscribe((id) => {
+      this.filterValues.id = id;
+      this.dataSource.filter = JSON.stringify(this.filterValues);
+    });
+    this.colourFilter.valueChanges.subscribe((colour) => {
+      this.filterValues.colour = colour;
+      this.dataSource.filter = JSON.stringify(this.filterValues);
+    });
+    this.petFilter.valueChanges.subscribe((pet) => {
+      this.filterValues.pet = pet;
+      this.dataSource.filter = JSON.stringify(this.filterValues);
+    });
   }
 
   createFilter(): (data: any, filter: string) => boolean {
-    let filterFunction = function(data, filter): boolean {
+    let filterFunction = function (data, filter): boolean {
       let searchTerms = JSON.parse(filter);
-      return data.name.toLowerCase().indexOf(searchTerms.name) !== -1
-        && data.id.toString().toLowerCase().indexOf(searchTerms.id) !== -1
-        && data.colour.toLowerCase().indexOf(searchTerms.colour) !== -1
-        && data.pet.toLowerCase().indexOf(searchTerms.pet) !== -1;
-    }
+      return (
+        data.name.toLowerCase().indexOf(searchTerms.name) !== -1 &&
+        data.id.toString().toLowerCase().indexOf(searchTerms.id) !== -1 &&
+        data.colour.toLowerCase().indexOf(searchTerms.colour) !== -1 &&
+        data.pet.toLowerCase().indexOf(searchTerms.pet) !== -1
+      );
+    };
     return filterFunction;
   }
-
 }
